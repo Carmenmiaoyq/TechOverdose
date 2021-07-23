@@ -28,7 +28,9 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('topic_id');
             $table->foreign('topic_id')
                   ->references('id')
-                  ->on('topics');
+                  ->on('topics')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 
@@ -39,6 +41,11 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropForeign(['topic_id']);
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('comments');
     }
 }

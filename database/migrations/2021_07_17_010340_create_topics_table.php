@@ -34,7 +34,6 @@ class CreateTopicsTable extends Migration
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('set null');
-
         });
     }
 
@@ -45,6 +44,11 @@ class CreateTopicsTable extends Migration
      */
     public function down()
     {
+        Schema::table('topics', function (Blueprint $table) {
+            $table->dropForeign(['sub_category_id']);
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('topics');
     }
 }
