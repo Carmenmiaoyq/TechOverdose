@@ -4,21 +4,26 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                <div class="flex-shrink-0 flex items-center mr-5">
+                    <a href="{{ route('home') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
+                <div class="flex-shrink-0 flex items-center">
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ __('TechOverdose') }}
+                    </h2>
+                </div>
                 <!-- Navigation Links -->
 
-                @auth
+                @role('super-admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-jet-nav-link>
                     </div>
-                @endauth
+                @endrole
             </div>
 
                 @guest
@@ -39,7 +44,7 @@
                     </div>
                 @endguest
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden {{ auth()->check() ? 'sm:flex' : ''  }} sm:items-center sm:ml-6">
 
                 @auth
                     <!-- Settings Dropdown -->

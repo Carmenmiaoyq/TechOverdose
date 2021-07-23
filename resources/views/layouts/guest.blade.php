@@ -15,12 +15,19 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
 
+        @livewireStyles
+
         <!-- Scripts -->
         <script src="{{ asset(mix('js/app.js')) }}" defer></script>
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
-            {{ $slot }}
-        </div>
+    <body class="font-sans antialiased">
+
+            @livewire('navigation-menu')
+
+            <div class="font-sans text-gray-900 antialiased">
+                {{ $slot }}
+            </div>
+
+            @livewireScripts
     </body>
 </html>
