@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,27 +18,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::view('/', 'home')->name('home');
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Email verification after user register new account
+Route::group(['middleware' => 'auth',
+              'prefix' => 'email',
+              'as' => 'verification.'], function() {
+
+        Route::view('/verify', 'auth.verify-email')->name('notice');
+
+        Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+            $request->fulfill();
+
+            return redirect('/');
+        })->middleware(['signed'])->name('verify');
+
+
+        Route::post('/verification-notification', function (Request $request) {
+            $request->user()->sendEmailVerificationNotification();
+
+            return back()->with('message', 'Verification link sent!');
+        })->middleware(['throttle:6,1'])->name('send');
+});
+
+
+Route::middleware(['auth', 'verified'])->group(function() {
+
+    Route::middleware(['role:super-admin'])->group(function() {
+
+        Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+        Route::resource('categories', CategoryController::class);
+        Route::resource('users', UserController::class);
+    });
+
+});
