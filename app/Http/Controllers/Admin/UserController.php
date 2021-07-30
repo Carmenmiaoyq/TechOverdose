@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -18,11 +19,12 @@ class UserController extends Controller
     {
         // this query is more efficient than using with('roles')
         // orderByRaw is better if I decide to add more roles...
-        $users = User::join('model_has_roles', 'model_has_roles.model_id', 'users.id')
-            ->join('roles', 'roles.id', 'model_has_roles.role_id')
-            ->select('users.name', 'users.email', 'users.banned_until', 'roles.name as role_name')
+        $users = User::select('users.id', 'users.email_verified_at','users.name',
+            'users.email', 'users.banned_until', 'roles.name as role_name')
+            ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
+            ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
             ->where('users.id', '!=', auth()->id() )
-            ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc ")
+            ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc")
             ->paginate(10);
 
         return view('admin.users.index', compact('users') );
@@ -55,9 +57,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): View
     {
-        //
+        $user = User::with('roles')
+                ->findOrFail($id);
+
+        return view('admin.users.show', compact('user'));
     }
 
     /**

@@ -59,7 +59,11 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ is_null($user->banned_until) ? 'Active' : 'Banned'  }}
+                                                    @if( !is_null($user->email_verified_at) )
+                                                        {{ is_null($user->banned_until) ? 'Active' : 'Banned'  }}
+                                                    @else
+                                                        {{ 'Email Not Verified' }}
+                                                    @endif
                                                 </span>
                                             </td>
 
@@ -68,7 +72,7 @@
                                             </td>
 
                                             <td class="px-6 py-4 space-x-4 font-bold whitespace-nowrap text-sm text-gray-500">
-                                                <a href="#" class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
+                                                <a href="{{ route('users.show', $user->id) }} class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
                                                 <a href="#" class="p-1 text-green-600  hover:underline rounded-sm hover:bg-green-100">Edit</a>
                                                 <a href="#" class="p-1 text-red-600  hover:underline rounded-sm hover:bg-red-100">Delete</a>
                                             </td>
