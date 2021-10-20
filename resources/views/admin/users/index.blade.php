@@ -45,7 +45,8 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0 h-10 w-10">
-                                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                                        {{-- <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt=""> --}}
+                                                        <img class="h-10 w-10 rounded-full" src="" alt="">
                                                     </div>
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">
@@ -72,7 +73,7 @@
                                             </td>
 
                                             <td class="px-6 py-4 space-x-4 font-bold whitespace-nowrap text-sm text-gray-500">
-                                                <a href="{{ route('users.show', $user->id) }} class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
+                                                <a href="{{ route('users.show', $user->id) }}" class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
                                                 <a href="#" class="p-1 text-green-600  hover:underline rounded-sm hover:bg-green-100">Edit</a>
                                                 <a href="#" class="p-1 text-red-600  hover:underline rounded-sm hover:bg-red-100">Delete</a>
                                             </td>
