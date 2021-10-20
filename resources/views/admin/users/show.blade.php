@@ -19,12 +19,12 @@
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="bg-white mb-5 shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        User Details
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                        Personal information about the user
-                    </p>
+
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 h-50 w-50">
+                            <img class="h-50 w-50 rounded-full" src="{{ !is_null($user->profile_photo_path) ? asset("storage/$user->profile_photo_path") : $user->profile_photo_url }}" alt="{{ $user->name }}" alt="">
+                        </div>
+                    </div>
                 </div>
                 <div class="border-t border-gray-200">
                     <dl>

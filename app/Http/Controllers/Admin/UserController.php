@@ -20,7 +20,7 @@ class UserController extends Controller
         // this query is more efficient than using with('roles')
         // orderByRaw is better if I decide to add more roles...
         $users = User::select('users.id', 'users.email_verified_at','users.name',
-            'users.email', 'users.banned_until', 'roles.name as role_name')
+            'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
             ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
             ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
             ->where('users.id', '!=', auth()->id() )
