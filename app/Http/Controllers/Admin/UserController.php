@@ -23,7 +23,7 @@ class UserController extends Controller
             'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
             ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
             ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
-            ->where('users.id', '!=', auth()->id() )
+            /* ->where('users.id', '!=', auth()->id() ) */
             ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc")
             ->paginate(10);
 
@@ -73,7 +73,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::with('roles')
+                ->findOrFail($id);
+
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -96,6 +99,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if( $id !== auth()->user()->id){
+            User::destroy($id);
+        }
+
+        return back()->with('sucess-message', 'User K.O.');
     }
 }

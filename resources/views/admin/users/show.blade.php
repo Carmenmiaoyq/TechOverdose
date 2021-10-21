@@ -16,75 +16,111 @@
                 <a href="{{ route('users.index') }}" class="mx-1">Go Back</a>
             </button>
 
-            <!-- This example requires Tailwind CSS v2.0+ -->
-            <div class="bg-white mb-5 shadow overflow-hidden sm:rounded-lg">
-                <div class="px-4 py-5 sm:px-6">
+            {{-- here --}}
+            <!--
+                This example requires Tailwind CSS v2.0+
 
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 h-50 w-50">
-                            <img class="h-50 w-50 rounded-full" src="{{ !is_null($user->profile_photo_path) ? asset("storage/$user->profile_photo_path") : $user->profile_photo_url }}" alt="{{ $user->name }}" alt="">
+                This example requires some changes to your config:
+
+                ```
+                // tailwind.config.js
+                module.exports = {
+                // ...
+                plugins: [
+                // ...
+                require('@tailwindcss/forms'),
+                ],
+                }
+                ```
+            -->
+
+            <div class="mt-10 sm:mt-0">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">User details</h3>
+                            <p class="mb-5 mt-1 text-sm text-gray-600">
+                                Use a permanent address where you can receive mail.
+                            </p>
+                            <div class="flex-shrink-0 h-50 w-50">
+                                <img class="h-50 w-50 rounded-full" src="{{ !is_null($user->profile_photo_path) ? asset("storage/$user->profile_photo_path") : $user->profile_photo_url }}" alt="{{ $user->name }}">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="border-t border-gray-200">
-                    <dl>
-                        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Role
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                {{ $user->roles[0]->name ?? '' }}
-                            </dd>
+
+                    {{-- <div class="mt-5 md:mt-0 md:col-span-2"> --}}
+
+                        <div class="mt-5 md:mt-0 md:col-span-2">
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+
+                                    <div>
+                                        <dl>
+                                            <div class="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Role
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                {{ $user->roles[0]->name ?? '' }}
+                                                </dd>
+                                            </div>
+                                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Username
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                {{ $user->name }}
+                                                </dd>
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Email
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                {{ !is_null($user->email_verified_at) ? $user->email : $user->email . ' - NOT VERIFIED' }}
+                                                </dd>
+                                            </div>
+                                            <div class="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Status
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                @if( (int)$user->strikes != 3 )
+                                                    {{ is_null($user->banned_until) ? 'Active' : 'Banned Until - ' . $user->banned_until }}
+                                                @else
+                                                    {{ 'Banned Forever' }}
+                                                @endif
+                                                </dd>
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Strikes
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                {{ (int)$user->strikes }}
+                                                </dd>
+                                            </div>
+                                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Topics Created
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                Number... (TODO)
+                                                </dd>
+                                                <dt class="text-sm font-medium text-gray-500">
+                                                Comments Posted
+                                                </dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                Number... (TODO)
+                                                </dd>
+                                            </div>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Username
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                {{ $user->name }}
-                            </dd>
-                            <dt class="text-sm font-medium text-gray-500">
-                                Email
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                {{ !is_null($user->email_verified_at) ? $user->email : $user->email . ' - NOT VERIFIED' }}
-                            </dd>
-                        </div>
-                        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Status
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                @if( (int)$user->strikes != 3 )
-                                    {{ is_null($user->banned_until) ? 'Active' : 'Banned Until - ' . $user->banned_until }}
-                                @else
-                                    {{ 'Banned Forever' }}
-                                @endif
-                            </dd>
-                            <dt class="text-sm font-medium text-gray-500">
-                                Strikes
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                {{ (int)$user->strikes }}
-                            </dd>
-                        </div>
-                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Topics Created
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                Number... (TODO)
-                            </dd>
-                            <dt class="text-sm font-medium text-gray-500">
-                                Comments Posted
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                Number... (TODO)
-                            </dd>
-                        </div>
-                    </dl>
+
+                        {{-- here --}}
+                        {{-- </div> --}}
                 </div>
             </div>
+        </div>
 
 
         </div>
