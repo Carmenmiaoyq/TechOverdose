@@ -9,12 +9,36 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <button class="flex items-center mb-5 px-2 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                </svg>
-                <a href="" class="mx-1">Create User</a>
-            </button>
+            <div class="flex justify-between">
+
+                <button class="flex order-first items-center mb-5 px-2 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg>
+                    <a href="" class="mx-1">Create User</a>
+                </button>
+
+                {{-- <button class="flex order-last items-center mb-5 px-2 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md dark:bg-gray-800 hover:bg-blue-500 dark:hover:bg-gray-700 focus:outline-none focus:bg-blue-500 dark:focus:bg-gray-700"> --}}
+                {{--     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> --}}
+                {{--         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /> --}}
+                {{--     </svg> --}}
+                {{--     <a href="" class="mx-1">Create User</a> --}}
+                {{-- </button> --}}
+
+                <div class="flex items-center justify-center">
+                    <form method="GET">
+                        <div class="relative text-gray-600 focus-within:text-gray-400">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                                <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                </button>
+                            </span>
+                            <input type="search" name="q" class="py-2 text-sm text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900" placeholder="Search..." autocomplete="off">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
 
             @if (session()->has('sucess-message'))
 
@@ -86,11 +110,7 @@
                                             <td class="px-6 py-4 space-x-4 font-bold whitespace-nowrap text-sm text-gray-500">
                                                 <a href="{{ route('users.show', $user->id) }}" class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
                                                 <a href="{{ route('users.edit', $user->id) }}" class="p-1 text-green-600  hover:underline rounded-sm hover:bg-green-100">Edit</a>
-                                                <form class="inline" action="{{ route('users.destroy', $user->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button onclick="return confirm('Are you sure?');" class="font-bold p-1 text-red-600  hover:underline rounded-sm hover:bg-red-100" type="submit">Delete</button>
-                                                </form>
+                                                <livewire:admin.confirm-delete-user :id="$user->id">
                                             </td>
                                         </tr>
                                     @endforeach
