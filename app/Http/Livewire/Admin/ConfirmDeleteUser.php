@@ -27,7 +27,10 @@ class ConfirmDeleteUser extends Component
 
         $this->showModal = false;
 
-        return redirect(request()->header('Referer'));
+        session()->flash('bold_message', "Oh!");
+        session()->flash('sucess_message', "User '$user->name' K.O.");
+
+        return redirect()->to('/users');
     }
 
     public function render()

@@ -17,17 +17,40 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        // this query is more efficient than using with('roles')
-        // orderByRaw is better if I decide to add more roles...
-        $users = User::select('users.id', 'users.email_verified_at','users.name',
-            'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
-            ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
-            ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
-            /* ->where('users.id', '!=', auth()->id() ) */
-            ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc")
-            ->paginate(10);
+        /* getAll is a local scope declared in User model */
+        /* $users = User::getAll()->paginate(10); */
+
+        // No input in search - get all users
+        if ( empty(request(['q'])) )
+        {
+            $users = User::getAll()->paginate(10);
+        }
+        else
+        {
+            // filter method in User Model - Query Scope
+            $users = User::filter(request(['q']))->paginate(10);
+
+            // No result from search
+            if ( $users->isEmpty() )
+            {
+                $users = User::getAll()->paginate(10);
+
+                session()->flash('bold_message', 'Ups!');
+                session()->flash('sucess_message', 'No user found');
+
+            }
+            else
+            {
+                // Send to view how many results were found
+                $count = count($users);
+
+                session()->flash('bold_message', 'Users:');
+                session()->flash('sucess_message', "$count results found");
+            }
+        }
 
         return view('admin.users.index', compact('users') );
+
     }
 
     /**
@@ -103,6 +126,6 @@ class UserController extends Controller
             User::destroy($id);
         }
 
-        return back()->with('sucess-message', 'User K.O.');
+        return back()->with('sucess_message', 'User K.O.');
     }
 }

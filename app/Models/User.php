@@ -73,4 +73,39 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Comment::class, 'user_id');
     }
+
+
+    public function scopeGetAll($query)
+    {
+        // this query is more efficient than using with('roles')
+        // orderByRaw is better if I decide to add more roles...
+        $query->select('users.id', 'users.email_verified_at','users.name',
+            'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
+              ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
+              ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
+              ->where('users.id', '!=', auth()->id() )
+              ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc");
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+
+        $query->when($filters['q'] ?? false, function ($query, $q) {
+
+            /*             $query->where(function($query, $search){ */
+            $query->select('users.id', 'users.email_verified_at','users.name',
+                'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
+                  ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
+                  ->leftjoin('roles', 'roles.id', 'model_has_roles.role_id')
+                  ->where('users.id', '!=', auth()->id() )
+                  ->where(function($query) use ($q) {
+                    return $query
+                      ->where('users.name', 'like', '%' . $q . '%')
+                      ->orWhere('users.email', 'like', '%' . $q . '%');
+                  })
+                  ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc");
+        });
+        /* }); */
+    }
+
 }
