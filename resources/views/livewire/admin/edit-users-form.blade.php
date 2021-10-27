@@ -8,13 +8,13 @@
                 <div class="col-span-6 sm:col-span-4">
 
                     <label for="name" class="block text-sm font-medium text-gray-700">Username</label>
-                    <input wire:model="user.name" type="text" name="name" id="name" autocomplete="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ $this->user->name }}">
+                    <input wire:model.defer="user.name" type="text" name="name" id="name" autocomplete="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ $this->user->name }}">
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
 
                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input wire:model="user.email" type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ $this->user->email }}">
+                    <input wire:model.defer="user.email" type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ $this->user->email }}">
                 </div>
 
                 {{-- <div class="col-span-6 sm:col-span-3"> --}}

@@ -40,7 +40,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-        /* dd($request); */
+        //
     }
 
     /**
