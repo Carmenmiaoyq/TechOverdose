@@ -10,6 +10,8 @@
             </span>
         </div>
 
+        {{ session()->forget(['sucess_message', 'bold_message']) }}
+
     @endif
 
 </div>

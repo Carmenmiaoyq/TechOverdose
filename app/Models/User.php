@@ -92,7 +92,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $query->when($filters['q'] ?? false, function ($query, $q) {
 
-            /*             $query->where(function($query, $search){ */
             $query->select('users.id', 'users.email_verified_at','users.name',
                 'users.email', 'users.banned_until', 'profile_photo_path', 'roles.name as role_name')
                   ->leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
@@ -105,7 +104,6 @@ class User extends Authenticatable implements MustVerifyEmail
                   })
                   ->orderByRaw("FIELD(role_name, 'super-admin') desc, (users.name) asc");
         });
-        /* }); */
     }
 
 }

@@ -18,10 +18,9 @@ class UserController extends Controller
     public function index(): View
     {
         /* getAll is a local scope declared in User model */
-        /* $users = User::getAll()->paginate(10); */
 
         // No input in search - get all users
-        if ( empty(request(['q'])) )
+        if ( empty(request('q')) )
         {
             $users = User::getAll()->paginate(10);
         }
@@ -44,8 +43,12 @@ class UserController extends Controller
                 // Send to view how many results were found
                 $count = count($users);
 
+                $message = $count == 1 ?
+                    "$count result found"
+                    : "$count results found";
+
                 session()->flash('bold_message', 'Users:');
-                session()->flash('sucess_message', "$count results found");
+                session()->flash('sucess_message', "$message");
             }
         }
 

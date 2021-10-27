@@ -10,6 +10,7 @@
             </span>
         </div>
 
+        {{ session()->forget(['error_message', 'bold_message']) }}
 
     @endif
 
