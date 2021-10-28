@@ -45,7 +45,6 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
 
-                                    @foreach($categories as $category)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
@@ -81,12 +80,10 @@
                                                 {{-- <livewire:admin.confirm-delete-user :id="$category->id"> --}}
                                             </td>
                                         </tr>
-                                    @endforeach
 
                                 </tbody>
                             </table>
                         </div>
-                        {{ $categories->links() }}
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ class CreateSubCategoriesTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('slug', 255);
+            $table->string('photo_path', 2048)->nullable();
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')

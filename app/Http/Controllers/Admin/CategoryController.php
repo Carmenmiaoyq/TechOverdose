@@ -17,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = Category::all();
+        $categories = Category::withCount([ 'subcategories', 'topics' ])
+            ->orderBy('topics_count')
+            ->paginate(10);
 
         return view('admin.categories.index', compact('categories') );
     }
@@ -51,7 +53,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::with('subcategories')
+                ->findOrFail($id);
+
+        return view('admin.categories.show', compact('category'));
     }
 
     /**

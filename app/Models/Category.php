@@ -17,12 +17,18 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'photo_path',
     ];
 
 
     public function subcategories()
     {
         return $this->hasMany(SubCategory::class, 'category_id');
+    }
+
+    public function topics()
+    {
+        return $this->hasManyThrough(Topic::class, SubCategory::class);
     }
 
 }
