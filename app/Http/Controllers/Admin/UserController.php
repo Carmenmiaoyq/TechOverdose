@@ -86,6 +86,7 @@ class UserController extends Controller
     public function show($id): View
     {
         $user = User::with('roles')
+                ->withCount(['topics', 'comments'])
                 ->findOrFail($id);
 
         return view('admin.users.show', compact('user'));
@@ -97,7 +98,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $user = User::with('roles')
                 ->findOrFail($id);

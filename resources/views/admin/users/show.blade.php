@@ -103,13 +103,13 @@
                                                 Topics Created
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                Number... (TODO)
+                                                {{ $user->topics_count }}
                                                 </dd>
                                                 <dt class="text-sm font-medium text-gray-500">
                                                 Comments Posted
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                                Number... (TODO)
+                                                {{ $user->comments_count }}
                                                 </dd>
                                             </div>
                                         </dl>
