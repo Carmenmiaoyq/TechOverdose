@@ -1192,20 +1192,20 @@ select {
 .mr-1 {
 	margin-right: 0.25rem;
 }
+.mb-10 {
+	margin-bottom: 2.5rem;
+}
 .mb-2 {
 	margin-bottom: 0.5rem;
 }
 .mr-4 {
 	margin-right: 1rem;
 }
-.mb-10 {
-	margin-bottom: 2.5rem;
+.mr-5 {
+	margin-right: 1.25rem;
 }
 .-mt-px {
 	margin-top: -1px;
-}
-.mr-5 {
-	margin-right: 1.25rem;
 }
 .block {
 	display: block;
@@ -1500,9 +1500,6 @@ select {
 .border-b {
 	border-bottom-width: 1px;
 }
-.border-r {
-	border-right-width: 1px;
-}
 .border-dashed {
 	border-style: dashed;
 }
@@ -1532,10 +1529,6 @@ select {
 .border-green-400 {
 	--tw-border-opacity: 1;
 	border-color: rgba(52, 211, 153, var(--tw-border-opacity));
-}
-.border-gray-400 {
-	--tw-border-opacity: 1;
-	border-color: rgba(156, 163, 175, var(--tw-border-opacity));
 }
 .bg-white {
 	--tw-bg-opacity: 1;

@@ -48,8 +48,12 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::middleware(['role:super-admin'])->group(function() {
 
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
-        Route::resource('categories', CategoryController::class);
-        Route::resource('users', UserController::class);
+        Route::resource('categories', CategoryController::class)->only([
+            'index', 'create', 'show', 'edit'
+        ]);
+        Route::resource('users', UserController::class)->except([
+            'create', 'store', 'update'
+        ]);
     });
 
 });

@@ -35,8 +35,6 @@ class EditUsersForm extends Component
         $this->user->save();
 
         session()->flash('sucess_message', 'User successfully updated.');
-
-
     }
 
     public function render()
