@@ -18,6 +18,9 @@
                 </button>
             </a>
 
+            <x-alert.sucess-message />
+            <x-alert.error-message />
+
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -78,7 +81,7 @@
                                             <td class="px-6 py-4 space-x-4 font-bold whitespace-nowrap text-sm text-gray-500">
                                                 <a href="{{ route('categories.show', $category->id) }}" class="p-1 text-indigo-600 hover:underline rounded-sm hover:bg-indigo-100">View</a>
                                                 <a href="{{ route('categories.edit', $category->id) }}" class="p-1 text-green-600  hover:underline rounded-sm hover:bg-green-100">Edit</a>
-                                                {{-- <livewire:admin.confirm-delete-user :id="$category->id"> --}}
+                                                <livewire:admin.confirm-delete-category :id="$category->id">
                                             </td>
                                         </tr>
                                     @endforeach
