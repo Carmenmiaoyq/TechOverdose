@@ -27,7 +27,7 @@ class EditCategoryForm extends Component
 
         $this->category->save();
 
-        session()->flash('sucess_message', 'User successfully updated.');
+        session()->flash('sucess_message', 'Category updated.');
     }
 
 

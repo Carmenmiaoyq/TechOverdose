@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    {{-- <livewire:admin.add-subcategory /> --}}
+                    <livewire:admin.edit-subcategories-form :id="$category->id" />
 
                 </div>
             </div>
