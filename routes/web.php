@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::view('/', 'home')->name('home');
+Route::view('/chat', 'chat')->name('chat');
 
 
 // Email verification after user register new account
